@@ -1,14 +1,17 @@
 import {Recipe} from "./recipe.model";
 import {Ingredient} from "../shared/ingredient.module";
+import {Subject} from "rxjs";
 
 export class RecipeService {
- //
+ // git push https://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@github.com/Davidsmait/shopping-app.git master
+
+  recipesChanged = new Subject<Recipe[]>()
 
   private recipes: Recipe[] = [
     new Recipe(
       'A test Recipe',
       'This is simply a description',
-      'https://upload.wikimedia.org/wikipedia/commons/thumb/c/c9/Illustrated_recipes%3B_%27Minted_Pineapple%27%2C_%27Quick_Tomato_Mold%27_Wellcome_L0072307.jpg/1200px-Illustrated_recipes%3B_%27Minted_Pineapple%27%2C_%27Quick_Tomato_Mold%27_Wellcome_L0072307.jpg',
+      'https://imagesvc.meredithcorp.io/v3/mm/image?url=https%3A%2F%2Fstatic.onecms.io%2Fwp-content%2Fuploads%2Fsites%2F44%2F2022%2F03%2F01%2Fcucumber-sandwich.jpg',
       [
         new Ingredient('lemon', 3),
         new Ingredient('water', 1),
@@ -39,4 +42,20 @@ export class RecipeService {
   getRecipeForId(id){
     return this.recipes[id];
   }
+
+  addRecipe(recipe: Recipe){
+    this.recipes.push(recipe);
+    this.recipesChanged.next(this.recipes.slice());
+  }
+
+  updateRecipe(index: number, newRecipe:Recipe){
+    this.recipes[index] = newRecipe;
+    this.recipesChanged.next(this.recipes.slice());
+  }
+
+  deleteService(index:number){
+    this.recipes.splice(index,1);
+    this.recipesChanged.next(this.recipes.slice());
+  }
+
 }
