@@ -7,14 +7,15 @@ import {RecipeStartComponent} from "./recipes/recipe-start/recipe-start.componen
 import {RecipeDetailComponent} from "./recipes/recipe-detail/recipe-detail.component";
 import {PageNotFoundComponent} from "./page-not-found/page-not-found.component";
 import {RecipeEditComponent} from "./recipes/recipe-edit/recipe-edit.component";
+import {RecipesResolverService} from "./recipes/recipes-resolver.service";
 
 const appRoutes: Routes = [
   {path: '', redirectTo:'/recipe', pathMatch:'full'},
   {path: 'recipe', component: RecipesComponent, children: [
       {path: '', component: RecipeStartComponent},
       {path: 'new', component: RecipeEditComponent},
-      {path: ':id', component: RecipeDetailComponent},
-      {path: ':id/edit', component: RecipeEditComponent}
+      {path: ':id', component: RecipeDetailComponent, resolve: {recipesData: RecipesResolverService}},
+      {path: ':id/edit', component: RecipeEditComponent, resolve: [RecipesResolverService]}
     ]},
   {path: 'shopping', component: ShoppingListComponent},
   {path: 'page-not-found', component: PageNotFoundComponent, data: {message:'Page not found!'}},

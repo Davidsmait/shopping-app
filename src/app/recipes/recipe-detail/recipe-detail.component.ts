@@ -15,7 +15,7 @@ export class RecipeDetailComponent implements OnInit {
 
   recipeCompEl: Recipe
   recipeId: number
-
+  // recipeData: any;
   constructor(
     private shoppingList: ShoppingListService,
     private recipeService: RecipeService,
@@ -23,6 +23,8 @@ export class RecipeDetailComponent implements OnInit {
     private router: Router) { }
 
   ngOnInit(): void {
+    console.log('recipeData: ',this.route.snapshot.data['recipesData'])
+
     this.route.params
       .subscribe(
         (params: Params) =>{
